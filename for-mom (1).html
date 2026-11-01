@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For Mom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#fbe9e4; --bg2:#fdf1ed; --circle:#f8dcd8; --frame:#efc9cf;
+  --pink:#f9d3dc; --pink-d:#f2a9bd; --pink-line:#e08aa3; --flap:#f4bccb;
+  --heart:#d9456b; --paper:#fffaf2; --ink:#9b4a63; --hint:#e3b3bd;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ color-scheme: light; }
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  background:var(--bg);
+  font-family:"Patrick Hand","Segoe Print","Comic Sans MS",cursive;
+  overflow:hidden; -webkit-tap-highlight-color:transparent;
+}
+.stage{
+  position:relative; height:100%; width:100%;
+  display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(circle at 12% 20%, var(--circle) 0 26vmax, transparent 26.1vmax),
+    radial-gradient(circle at 92% 48%, var(--circle) 0 28vmax, transparent 28.1vmax),
+    radial-gradient(circle at 18% 92%, var(--circle) 0 24vmax, transparent 24.1vmax),
+    linear-gradient(var(--bg2),var(--bg));
+  cursor:pointer;
+}
+.frame{position:absolute; inset:max(14px,env(safe-area-inset-top,0px)) 14px max(14px,env(safe-area-inset-bottom,0px)) 14px; border:1px solid var(--frame); pointer-events:none}
+.card{position:relative; width:min(92vw, 62vh, 460px); aspect-ratio:400/480}
+svg{width:100%; height:100%; overflow:visible; display:block}
+.hint{position:absolute; left:0; right:0; bottom:calc(26px + env(safe-area-inset-bottom,0px)); text-align:center; color:var(--hint); font-size:15px; letter-spacing:.02em; pointer-events:none; transition:opacity .4s}
+.float{position:absolute; pointer-events:none; color:var(--heart); will-change:transform,opacity}
+.bg-heart{opacity:.22; animation:drift linear infinite}
+@keyframes drift{from{transform:translateY(0) rotate(-8deg)}to{transform:translateY(-110vh) rotate(10deg)}}
+.bob{animation:bob 3.4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.opened .bob{animation:none}
+
+/* envelope pieces */
+#seal{transform-box:fill-box; transform-origin:center; transition:transform .28s cubic-bezier(.3,1.6,.5,1), opacity .2s}
+#seal.pop{transform:scale(1.5); opacity:0}
+#flapClosed{transform-origin:200px 250px; transition:transform .28s ease-in}
+#flapClosed.shut{transform:scaleY(0)}
+#flapOpen{transform-origin:200px 250px; transform:scaleY(0); transition:transform .3s ease-out}
+#flapOpen.up{transform:scaleY(1)}
+#letter{transition:transform 1s cubic-bezier(.25,.9,.3,1)}
+#letter.rise{transform:translateY(-212px)}
+.eyes-open{opacity:0}
+.happy .eyes-open{opacity:1}
+.happy .eyes-dot{opacity:0}
+.blink .eyes-dot{transform:scaleY(.1)}
+.eyes-dot{transform-box:fill-box; transform-origin:center; transition:transform .08s}
+text{font-family:"Patrick Hand","Segoe Print","Comic Sans MS",cursive; fill:var(--ink)}
+@media (prefers-reduced-motion:reduce){
+  .bg-heart,.bob{animation:none}
+  #letter,#flapClosed,#flapOpen,#seal{transition-duration:.01s}
+}
+</style>
+</head>
+<body>
+<div class="stage" id="stage" role="button" tabindex="0" aria-label="Open the letter for Mom">
+  <div class="frame"></div>
+  <div class="card" id="card">
+    <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <path id="heartP" d="M0 7 C-14 -4 -9 -14 0 -7 C9 -14 14 -4 0 7Z"/>
+        <clipPath id="clipL"><rect x="0" y="0" width="400" height="430"/></clipPath>
+      </defs>
+      <g class="bob" id="env">
+        <!-- back of envelope -->
+        <rect x="60" y="250" width="280" height="180" fill="var(--pink-d)" stroke="var(--pink-line)" stroke-width="3"/>
+        <!-- open flap (behind letter) -->
+        <polygon id="flapOpen" points="60,250 340,250 200,150" fill="var(--flap)" stroke="var(--pink-line)" stroke-width="3" stroke-linejoin="round"/>
+        <!-- letter -->
+        <g clip-path="url(#clipL)">
+          <g id="letter" transform="translate(0,0)">
+            <g id="letterInner">
+              <rect x="80" y="254" width="240" height="230" fill="var(--paper)" stroke="#f0e1d2" stroke-width="2"/>
+              <g stroke="#f1e4d6" stroke-width="1">
+                <line x1="100" y1="312" x2="300" y2="312"/><line x1="100" y1="342" x2="300" y2="342"/>
+                <line x1="100" y1="372" x2="300" y2="372"/><line x1="100" y1="402" x2="300" y2="402"/>
+              </g>
+              <use href="#heartP" x="302" y="271" fill="var(--heart)" transform="translate(302 271) scale(.6) translate(-302 -271)"/>
+              <text id="t0" x="200" y="304" font-size="22" text-anchor="middle"></text>
+              <text id="t1" x="200" y="334" font-size="22" text-anchor="middle"></text>
+              <text id="t2" x="200" y="364" font-size="22" text-anchor="middle"></text>
+              <text id="t3" x="200" y="394" font-size="22" text-anchor="middle"></text>
+              <text id="t4" x="200" y="440" font-size="19" text-anchor="middle" font-weight="bold" style="fill:#8a3a55"></text>
+            </g>
+          </g>
+        </g>
+        <!-- front pocket -->
+        <polygon points="60,250 200,345 60,430" fill="var(--pink)" stroke="var(--pink-line)" stroke-width="3" stroke-linejoin="round"/>
+        <polygon points="340,250 200,345 340,430" fill="var(--pink)" stroke="var(--pink-line)" stroke-width="3" stroke-linejoin="round"/>
+        <polygon points="60,430 200,335 340,430" fill="#fad8e1" stroke="var(--pink-line)" stroke-width="3" stroke-linejoin="round"/>
+        <!-- face -->
+        <g id="face">
+          <g class="eyes-dot"><ellipse cx="164" cy="388" rx="4.5" ry="6" fill="#6b3a4a"/></g>
+          <g class="eyes-dot"><ellipse cx="236" cy="388" rx="4.5" ry="6" fill="#6b3a4a"/></g>
+          <g class="eyes-open" fill="none" stroke="#6b3a4a" stroke-width="2.6" stroke-linecap="round">
+            <path d="M156 390 Q164 380 172 390"/><path d="M228 390 Q236 380 244 390"/>
+          </g>
+          <path d="M188 394 Q200 404 212 394" fill="none" stroke="#6b3a4a" stroke-width="2.6" stroke-linecap="round"/>
+          <ellipse cx="138" cy="396" rx="13" ry="7" fill="#f6a3bb"/>
+          <ellipse cx="262" cy="396" rx="13" ry="7" fill="#f6a3bb"/>
+        </g>
+        <!-- closed flap -->
+        <g id="flapClosed">
+          <polygon points="60,250 340,250 200,350" fill="var(--flap)" stroke="var(--pink-line)" stroke-width="3" stroke-linejoin="round"/>
+        </g>
+        <g id="seal"><use href="#heartP" fill="var(--heart)" stroke="#b83157" stroke-width="1" transform="translate(200 340) scale(1.9)"/></g>
+      </g>
+    </svg>
+  </div>
+  <div class="hint" id="hint">tap to open</div>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){return document.getElementById(id)};
+  var stage=$('stage'), card=$('card'), hint=$('hint'), face=$('face');
+  var lines=["Dear MOM,","thank you for being","my calm and my laugh,","Love you always."];
+  var sign="By, Your Loving son \u2665";
+  var state='closed', timers=[], typing=null;
+
+  function later(fn,ms){var t=setTimeout(fn,ms);timers.push(t);return t}
+  function clearAll(){timers.forEach(clearTimeout);timers=[];if(typing)clearInterval(typing);typing=null}
+
+  /* drifting background hearts */
+  var cols=['#e98aa5','#f3a6b8','#d9456b','#f6bfcb'];
+  for(var i=0;i<16;i++){
+    var h=document.createElement('div');
+    h.className='float bg-heart';
+    h.textContent='\u2665';
+    var s=10+Math.random()*22;
+    h.style.cssText='left:'+(Math.random()*100)+'vw;bottom:-40px;font-size:'+s+'px;color:'+cols[i%4]+
+      ';animation-duration:'+(14+Math.random()*16)+'s;animation-delay:'+(-Math.random()*26)+'s';
+    stage.appendChild(h);
+  }
+
+  /* burst of hearts and sparkles from the letter */
+  function burst(){
+    var r=card.getBoundingClientRect();
+    var cx=r.left+r.width*.5, cy=r.top+r.height*.42;
+    for(var i=0;i<26;i++){
+      var p=document.createElement('div');
+      p.className='float';
+      var spark=i%4===0;
+      p.textContent=spark?'\u2726':'\u2665';
+      p.style.cssText='left:'+cx+'px;top:'+cy+'px;font-size:'+(spark?12+Math.random()*8:12+Math.random()*20)+
+        'px;color:'+(spark?'#f0c75e':cols[i%4]);
+      stage.appendChild(p);
+      var a=Math.random()*Math.PI*2, d=90+Math.random()*190;
+      var dx=Math.cos(a)*d, dy=Math.sin(a)*d*.85-60;
+      var anim=p.animate([
+        {transform:'translate(-50%,-50%) scale(.3)',opacity:1},
+        {transform:'translate(calc(-50% + '+dx+'px),calc(-50% + '+dy+'px)) scale(1) rotate('+(Math.random()*60-30)+'deg)',opacity:1,offset:.6},
+        {transform:'translate(calc(-50% + '+dx*1.1+'px),calc(-50% + '+(dy+70)+'px)) scale(.8)',opacity:0}
+      ],{duration:1600+Math.random()*900,easing:'cubic-bezier(.2,.7,.3,1)'});
+      anim.onfinish=(function(el){return function(){el.remove()}})(p);
+    }
+  }
+
+  /* blinking */
+  function blink(){
+    if(state==='closed'){face.classList.add('blink');setTimeout(function(){face.classList.remove('blink')},140)}
+    setTimeout(blink,2200+Math.random()*2200);
+  }
+  setTimeout(blink,1800);
+
+  function typeText(){
+    var all=lines.concat([sign]), li=0, ci=0;
+    ['t0','t1','t2','t3','t4'].forEach(function(id){$(id).textContent=''});
+    typing=setInterval(function(){
+      if(li>=all.length){clearInterval(typing);typing=null;$('t4').textContent=all[4];return}
+      var el=$('t'+li), line=all[li];
+      ci++;
+      el.textContent=line.slice(0,ci)+(ci<line.length||li<all.length-1?'|':'');
+      if(ci>=line.length){el.textContent=line;li++;ci=0}
+    },55);
+  }
+
+  function open(){
+    if(state!=='closed')return;
+    state='opening';
+    hint.style.opacity=0;
+    $('seal').classList.add('pop');
+    later(function(){$('flapClosed').classList.add('shut')},180);
+    later(function(){face.classList.add('happy');$('flapOpen').classList.add('up')},440);
+    later(function(){$('letter').classList.add('rise')},720);
+    later(function(){burst();typeText()},1500);
+    later(function(){state='open';hint.textContent='click to open again';hint.style.opacity=1},6200);
+  }
+  function reset(){
+    clearAll();
+    ['seal'].forEach(function(i){$(i).classList.remove('pop')});
+    $('flapClosed').classList.remove('shut');
+    $('flapOpen').classList.remove('up');
+    $('letter').classList.remove('rise');
+    face.classList.remove('happy');
+    ['t0','t1','t2','t3','t4'].forEach(function(id){$(id).textContent=''});
+    state='closed';hint.textContent='tap to open';hint.style.opacity=1;
+  }
+  function act(){
+    if(state==='closed')open();
+    else if(state==='open'){reset();later(open,350)}
+  }
+  stage.addEventListener('click',act);
+  stage.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();act()}});
+})();
+</script>
+</body>
+</html>
